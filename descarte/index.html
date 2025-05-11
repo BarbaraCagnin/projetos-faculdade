@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mapa de Pontos de Coleta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <style>
+    #map {
+      height: 90vh;
+      width: 100%;
+    }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pontos de Coleta - Zona Leste de SP</h1>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+  <script>
+    var map = L.map('map').setView([-23.575, -46.585], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var markerCluster = L.markerClusterGroup();
+
+    var locais = [
+      ["EcoPonto Vila Prudente", -23.5847, -46.5835, "Diversos", "R. Dr. João Ribeiro, 142"],
+      ["Supermercado EcoVila", -23.5823, -46.5801, "Recicláveis", "Av. do Oratório, 2001"],
+      ["Cooperativa Recicla Vila Alpina", -23.5672, -46.5718, "Recicláveis", "R. Serra da Mantiqueira, 45"],
+      ["Posto de Coleta VL Alpina", -23.5705, -46.5753, "Eletrônicos", "R. Itapira, 88"],
+      ["EcoPonto Mooca", -23.5624, -46.5998, "Diversos", "R. Taquari, 549"],
+      ["Loja Verde Mooca", -23.5589, -46.5932, "Óleo/Pilhas", "Av. Paes de Barros, 1567"],
+      ["EcoPonto São Lucas", -23.5989, -46.5345, "Diversos", "R. São Lucas, 200"],
+      ["Centro de Reciclagem SL", -23.6012, -46.5388, "Recicláveis", "Av. Sapopemba, 3000"],
+      ["Ponto de Coleta Camillo Haddad", -23.5912, -46.5567, "Eletrônicos", "R. Camillo Haddad, 150"],
+      ["Escola Recicla CH", -23.5889, -46.5523, "Papel/Pet", "R. dos Bandeirantes, 500"],
+      ["Associação Jd. Independência", -23.6067, -46.5432, "Recicláveis", "R. Independência, 350"],
+      ["EcoPonto Jd. Independência", -23.6034, -46.5401, "Diversos", "Av. Sapopemba, 3200"]
+    ];
+
+    locais.forEach(function(local) {
+      var popup = `<strong>${local[0]}</strong><br>Tipo: ${local[3]}<br>Endereço: ${local[4]}`;
+      var marker = L.marker([local[1], local[2]]).bindPopup(popup);
+      markerCluster.addLayer(marker);
+    });
+
+    map.addLayer(markerCluster);
+  </script>
+</body>
+</html>
